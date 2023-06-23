@@ -1,0 +1,23 @@
+.post-list {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.post {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.next-page {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.next-page:hover {
+  text-decoration: underline;
+}

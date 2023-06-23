@@ -1,0 +1,29 @@
+{% load static %}
+
+<html>
+  <head>
+    <title>{% block title %}My App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <header>
+      <h1>{% block heading %}My App{% endblock %}</h1>
+    </header>
+    <main>
+      <div id="post-list"></div>
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <p>&copy; My App</p>
+    </footer>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+    ></script>
+    <script
+      type="application/javascript"
+      src="{% static 'js/post_list.js' %}"
+    ></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
