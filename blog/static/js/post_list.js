@@ -12,13 +12,13 @@ function load_posts(url) {
         success: function (data) {
             // Iterate over the posts
             console.log('Posts loaded:', data);
-
+            console.log('result loaded:', data.results);
             if (data && data.results) {
-                data.results.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
+                // data.results.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                console.log('result loaded:', data.results);
                 data.results.forEach(post => {
                     let commentsHtml = '';
-                    post.comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort comments by most recent
+                    // post.comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort comments by most recent
 
                     let displayedComments = 0; // Counter for displayed comments
                     post.comments.forEach(comment => {
@@ -48,7 +48,7 @@ function load_posts(url) {
                 });
                 
                 nextUrl = data.next;
-
+                console.log(nextUrl);
                 if (data.next) {
                     $('#load-more-button').appendTo('#post-list').show();
                 } else {
@@ -64,6 +64,10 @@ function load_posts(url) {
         }
     });
 }
+$('#load-more-button').click(function () {
+    console.log('Button triggered');
+    load_posts(nextUrl);
+});
 
 
 load_posts(nextUrl);
