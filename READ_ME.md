@@ -16,7 +16,7 @@ This will set up the project using Docker and also generate fake data from docke
 The project has two endpoints:
 
 1. HTML page with AJAX: `http://localhost:8000/posts/`
-2. Django REST Framework: `http://localhost:8000/api/posts/`
+2. Django REST Framework: `http://localhost:8000/api/posts/` 
 
 The `posts` endpoint returns a list of posts in JSON format.
 

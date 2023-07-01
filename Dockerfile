@@ -1,36 +1,36 @@
 # Use the official Python image as the base image
 FROM python:3.9
 
-# Set the working directory to /app
-WORKDIR /app
+# Set the working directory to /srv/app
+WORKDIR /srv/app
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    USER=appuser \
+    GROUP=appgroup
 
 # Copy the project files to the container
-COPY . .
+COPY . /srv/app/
 
 # Set execute permission on the entrypoint script
-RUN chmod +x /app/docker-entrypoint.sh
+RUN chmod +x /srv/app/docker-entrypoint.sh
 
 # Install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends netcat-openbsd postgresql postgresql-contrib libpq-dev && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip && \
+    rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
     pip install gunicorn
 
 # Create a new user and group
-ENV USER=appuser
-ENV GROUP=appgroup
 RUN addgroup --system ${GROUP} && \
     adduser --system --ingroup ${GROUP} ${USER} && \
-    chown -R ${USER}:${GROUP} /app
+    chown -R ${USER}:${GROUP} /srv/app/
 
-# Set the ownership of the /app directory to the new user and group
+# Set the ownership of the /srv/app directory to the new user and group
 USER ${USER}:${GROUP}
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
 # Run the entrypoint script
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]

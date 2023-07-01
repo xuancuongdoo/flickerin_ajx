@@ -7,7 +7,7 @@ create_network:
 
 .PHONY: up
 up:
-	$(DOCKER_COMPOSE_COMMAND) up -d 
+	$(DOCKER_COMPOSE_COMMAND) up -d  
 
 .PHONY: restart
 restart:

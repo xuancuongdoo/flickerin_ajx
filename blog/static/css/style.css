@@ -21,3 +21,21 @@
 .next-page:hover {
   text-decoration: underline;
 }
+.comments {
+    border: 1px solid black;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment-content {
+    overflow-wrap: break-word;
+}
+
+.comment-date {
+    color: gray;
+    font-size: 0.8em;
+}

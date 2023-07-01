@@ -9,33 +9,31 @@ class Command(BaseCommand):
     help = 'Generates fake data for testing purposes'
 
     def handle(self, *args, **options):
+
         # Create an author
-        author = User.objects.create_user(
-            username='cuong',
-            email='cuong@example.com',
-            password='cuong'
-        )
+        # Create 100 Users
+        for i in range(10):
+            username = f"user{i}"
+            email = f"user{i}@example.com"
+            password = f"user{i}"
+            user, created = User.objects.get_or_create(
+                username=username, email=email, defaults={"password": password})
 
-        # Create 100 Posts
-        for i in range(100):
-
-            post = Post.objects.create(
-                title=f"Post {i}",
-                content=f"This is the content of post {i}",
-                author=author,
-                created_at=timezone.now()
-            )
-
-            # Create 1-3 Comments for each Post
-            num_comments = random.randint(1, 3)
-            for j in range(num_comments):
-                author = random.choice(User.objects.all())
-                comment = Comment.objects.create(
-                    content=f"This is comment {j} on post {i}",
-                    author=author,
-                    post=post,
-                    created_at=timezone.now()
+            for j in range(5):
+                title = f"Post {i*3+j}"
+                content = f"This is the content of post {i*3+j}"
+                created_at = timezone.now()
+                post, created = Post.objects.get_or_create(
+                    title=title, content=content, author=user, created_at=created_at
                 )
+
+                for k in range(20):
+                    comment_author = random.choice(User.objects.all())
+                    comment_content = f"This is comment {k} on post {i*3+j}"
+                    comment_created_at = timezone.now()
+                    comment, created = Comment.objects.get_or_create(
+                        content=comment_content, author=comment_author, post=post, created_at=comment_created_at
+                    )
 
         self.stdout.write(self.style.SUCCESS(
             'Successfully generated fake data'))

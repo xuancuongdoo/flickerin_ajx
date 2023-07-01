@@ -15,6 +15,7 @@ python manage.py migrate --noinput
 echo "Generating fake data..."
 python manage.py generate_fake_data
 
+rm -rf static
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput

@@ -1,7 +1,3 @@
-const pageSize = 10;
-let currentPage = $('#post-list .post').length >= pageSize ? 2 : 1;
-let nextUrl = `/api/posts/?page=${currentPage}`;
-
 function load_posts(url) {
     console.log('Loading posts from', url);
 
@@ -14,16 +10,24 @@ function load_posts(url) {
         url: url,
         dataType: 'json',
         success: function (data) {
-            console.log('Posts loaded:', data);
-
+            console.log('Posts22321312 loaded:', data);
+            console.log('Posts312312321 loaded:', data); 
             if (data && data.results) {
                 data.results.forEach(post => {
+                    let comments_html = '';
+                    post.comments.forEach(comment => {
+                        comments_html += `<p>${comment.partial_content}</p>`;
+                        console.log(comments_html)
+                    });
+
                     const post_html = `
                         <div class="post">
                             <h2>${post.title}</h2>
-                            <p>Author: ${post.author}</p>
+                            <p>Author: ${post.author_nickname}</p>
                             <p>${post.content}</p>
-                        </div>
+                          <p>${comments_html}
+                        </p>
+                        </div>  
                     `;
 
                     $('#post-list').append(post_html);
@@ -36,6 +40,7 @@ function load_posts(url) {
                 } else {
                     $('#load-more-button').hide();
                 }
+                
             } else {
                 console.error('Invalid response data:', data);
             }
@@ -45,10 +50,3 @@ function load_posts(url) {
         }
     });
 }
-
-load_posts(nextUrl);
-
-$('#load-more-button').click(function () {
-    console.log('button trigger');
-    load_posts(nextUrl);
-});

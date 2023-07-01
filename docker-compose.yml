@@ -26,8 +26,10 @@ services:
       - 8000:8000
     depends_on:
       - db
+    working_dir: "/srv/app"
     volumes:
-      - .:/app
+      - .:/srv/app
+      - static_volume:/srv/app/static  # Mount static_volume to /srv/app/static
     environment:
       DEBUG: 1
       DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
@@ -41,7 +43,6 @@ services:
 volumes:
   pgdata:
   static_volume:
-
 
 networks:
   my_network:
